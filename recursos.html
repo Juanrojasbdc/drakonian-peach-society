@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Recursos & Parciales — Drakonian Peach Society</title>
+  <title>Buscador de Recursos — Drakonian Peach Society</title>
   <link rel="icon" type="image/png" href="favicon.png">
   <!-- Carga de Supabase JS -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -27,14 +27,15 @@
     }
 
     header {
-      padding: 2rem 1rem;
+      padding: 2.5rem 1rem 1.5rem 1rem;
       text-align: center;
       border-bottom: 1px solid var(--border-color);
+      background: radial-gradient(circle at top, rgba(255, 107, 53, 0.08) 0%, transparent 70%);
     }
 
     header h1 {
       margin: 0;
-      font-size: 2.2rem;
+      font-size: 2.3rem;
       background: linear-gradient(135deg, var(--accent-orange), var(--accent-blue));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -42,7 +43,11 @@
 
     header p {
       color: var(--text-muted);
-      margin-top: 0.5rem;
+      margin-top: 0.6rem;
+      font-size: 1.05rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .container {
@@ -52,12 +57,25 @@
     }
 
     .upload-banner {
-      background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(0, 210, 255, 0.1));
-      border: 1px dashed var(--accent-orange);
-      border-radius: 12px;
-      padding: 1.5rem;
+      background: linear-gradient(135deg, rgba(255, 107, 53, 0.12), rgba(0, 210, 255, 0.08));
+      border: 1px dashed rgba(255, 107, 53, 0.5);
+      border-radius: 14px;
+      padding: 1.8rem;
       text-align: center;
       margin-bottom: 2.5rem;
+    }
+
+    .upload-banner h2 {
+      margin-top: 0;
+      font-size: 1.5rem;
+      color: #fff;
+    }
+
+    .upload-banner p {
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0.5rem auto 1.2rem auto;
+      line-height: 1.5;
     }
 
     .btn-group {
@@ -65,28 +83,39 @@
       gap: 1rem;
       justify-content: center;
       flex-wrap: wrap;
-      margin-top: 1rem;
     }
 
     .btn-action {
       background: var(--accent-orange);
       color: #fff;
-      padding: 0.7rem 1.4rem;
+      padding: 0.8rem 1.5rem;
       border-radius: 8px;
       border: none;
       font-weight: bold;
       cursor: pointer;
       text-decoration: none;
-      font-size: 1rem;
+      font-size: 0.95rem;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .btn-action:hover {
+      transform: translateY(-2px);
+      background: #e05a2b;
     }
 
     .btn-telegram {
       background: #0088cc;
       color: #fff;
-      padding: 0.7rem 1.4rem;
+      padding: 0.8rem 1.5rem;
       border-radius: 8px;
       text-decoration: none;
       font-weight: bold;
+      font-size: 0.95rem;
+      transition: transform 0.2s;
+    }
+
+    .btn-telegram:hover {
+      transform: translateY(-2px);
     }
 
     .search-section {
@@ -99,14 +128,18 @@
 
     .search-bar {
       width: 100%;
-      padding: 0.8rem 1rem;
+      padding: 0.85rem 1.1rem;
       background: var(--bg-dark);
       border: 1px solid var(--border-color);
       border-radius: 8px;
       color: var(--text-main);
       font-size: 1rem;
       box-sizing: border-box;
-      margin-bottom: 1rem;
+    }
+
+    .search-bar:focus {
+      outline: none;
+      border-color: var(--accent-blue);
     }
 
     .resources-grid {
@@ -118,40 +151,47 @@
     .card {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 1.2rem;
+      border-radius: 12px;
+      padding: 1.3rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      transition: border-color 0.2s;
+    }
+
+    .card:hover {
+      border-color: rgba(0, 210, 255, 0.4);
     }
 
     .card-tag {
       font-size: 0.75rem;
       text-transform: uppercase;
-      padding: 0.2rem 0.5rem;
-      border-radius: 4px;
-      background: rgba(0, 210, 255, 0.15);
+      font-weight: bold;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      background: rgba(0, 210, 255, 0.12);
       color: var(--accent-blue);
       display: inline-block;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.6rem;
     }
 
     .card h3 {
-      margin: 0.3rem 0;
-      font-size: 1.1rem;
+      margin: 0.3rem 0 0.6rem 0;
+      font-size: 1.15rem;
+      line-height: 1.3;
     }
 
     .card-meta {
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       color: var(--text-muted);
-      margin-bottom: 1rem;
+      line-height: 1.6;
     }
 
     .card-footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 1rem;
+      margin-top: 1.2rem;
       padding-top: 0.8rem;
       border-top: 1px solid var(--border-color);
     }
@@ -160,15 +200,23 @@
       color: var(--accent-orange);
       text-decoration: none;
       font-weight: bold;
-      font-size: 0.9rem;
+      font-size: 0.92rem;
     }
 
     .like-btn {
-      background: none;
-      border: none;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 0.3rem 0.7rem;
       color: var(--text-muted);
       cursor: pointer;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
+      transition: background 0.2s;
+    }
+
+    .like-btn:hover {
+      background: rgba(255, 107, 53, 0.15);
+      color: var(--accent-orange);
     }
 
     /* Modal Formulario */
@@ -176,7 +224,8 @@
       display: none;
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, 0.82);
+      backdrop-filter: blur(4px);
       justify-content: center;
       align-items: center;
       z-index: 1000;
@@ -184,20 +233,28 @@
 
     .modal-content {
       background: var(--card-bg);
-      padding: 2rem;
-      border-radius: 12px;
-      max-width: 450px;
+      padding: 2.2rem;
+      border-radius: 14px;
+      max-width: 480px;
       width: 90%;
       border: 1px solid var(--border-color);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
 
-    .modal-content h2 { margin-top: 0; }
-    .form-group { margin-bottom: 1rem; }
-    .form-group label { display: block; margin-bottom: 0.3rem; font-size: 0.9rem; }
+    .modal-header h2 { margin: 0; font-size: 1.4rem; color: #fff; }
+    .modal-header p { color: var(--text-muted); font-size: 0.88rem; margin: 0.4rem 0 1.2rem 0; line-height: 1.4; }
+
+    .form-group { margin-bottom: 1.1rem; }
+    .form-group label { display: block; margin-bottom: 0.4rem; font-size: 0.88rem; font-weight: 500; color: #d0d7e5; }
     .form-group input, .form-group select {
-      width: 100%; padding: 0.6rem;
+      width: 100%; padding: 0.7rem;
       background: var(--bg-dark); border: 1px solid var(--border-color);
-      border-radius: 6px; color: var(--text-main); box-sizing: border-box;
+      border-radius: 8px; color: var(--text-main); box-sizing: border-box;
+      font-size: 0.95rem;
+    }
+
+    .form-group input:focus, .form-group select:focus {
+      outline: none; border-color: var(--accent-orange);
     }
   </style>
 </head>
@@ -205,34 +262,37 @@
 
   <header>
     <h1>Drakonian Peach Society</h1>
-    <p>Índice Hiperlocal de Recursos & Parciales en Tiempo Real</p>
+    <p>El repositorio académico hiperlocal hecho por y para la comunidad universitaria.</p>
   </header>
 
   <div class="container">
 
     <div class="upload-banner">
-      <h2>¿Tienes un parcial o guía para compartir?</h2>
-      <p>Publica directamente en la plataforma o envía por nuestro canal verificado.</p>
+      <h2>🔥 ¿Tienes un parcial, taller o guía para salvar el corte?</h2>
+      <p>Súbelo en segundos a la comunidad. Ayuda a tus compañeros de carrera a preparar sus exámenes con material libre, anónimo y colaborativo.</p>
       <div class="btn-group">
-        <button class="btn-action" onclick="openModal()">➕ Publicar Recurso Ahora</button>
-        <a href="https://t.me/DrakonianAportes" target="_blank" class="btn-telegram">✈️ Canal Telegram</a>
+        <button class="btn-action" onclick="openModal()">➕ Compartir un Recurso</button>
+        <a href="https://t.me/DrakonianAportes" target="_blank" class="btn-telegram">✈️ Canal de Telegram</a>
       </div>
     </div>
 
     <div class="search-section">
-      <input type="text" id="searchInput" class="search-bar" placeholder="🔍 Buscar por materia, profesor (Ej: Andrés Ortega)..." onkeyup="filterCards()">
+      <input type="text" id="searchInput" class="search-bar" placeholder="🔍 Buscar por materia, profesor (Ej: Andrés Ortega), o tema..." onkeyup="filterCards()">
     </div>
 
     <div class="resources-grid" id="resourcesGrid">
-      <p style="text-align:center; color: var(--text-muted);">Cargando recursos en tiempo real...</p>
+      <p style="text-align:center; grid-column: 1/-1; color: var(--text-muted);">Cargando el banco de recursos en tiempo real...</p>
     </div>
 
   </div>
 
-  <!-- Modal para publicar recurso -->
+  <!-- Modal con narrativa comunitaria -->
   <div class="modal" id="uploadModal">
     <div class="modal-content">
-      <h2>Publicar Aporte</h2>
+      <div class="modal-header">
+        <h2>🌱 Sumar Aporte a la Comunidad</h2>
+        <p>Gracias por aportar al banco colectivo de DPS. Tu contribución salva cortes y ayuda a estudiantes de todos los semestres.</p>
+      </div>
       <form id="resourceForm" onsubmit="submitResource(event)">
         <div class="form-group">
           <label>Título del Recurso:</label>
@@ -256,7 +316,7 @@
             <option value="Parcial Pasado">Parcial Pasado</option>
             <option value="Taller Resuelto">Taller / Guía Resuelta</option>
             <option value="Plantilla Excel">Plantilla Excel / Dataset</option>
-            <option value="Apuntes">Resumen / Apuntes</option>
+            <option value="Apuntes">Resumen / Apuntes de Clase</option>
           </select>
         </div>
         <div class="form-group">
@@ -264,8 +324,8 @@
           <input type="url" id="inputUrl" placeholder="https://..." required>
         </div>
         <div style="display:flex; gap: 1rem; margin-top: 1.5rem;">
-          <button type="submit" class="btn-action" style="flex:1;">Publicar Instantáneamente</button>
-          <button type="button" class="btn-action" style="background:#444;" onclick="closeModal()">Cancelar</button>
+          <button type="submit" class="btn-action" style="flex:1;">🚀 Publicar en la Comunidad</button>
+          <button type="button" class="btn-action" style="background:#333; color:#ccc;" onclick="closeModal()">Cancelar</button>
         </div>
       </form>
     </div>
@@ -298,7 +358,7 @@
     function renderResources(items) {
       const grid = document.getElementById('resourcesGrid');
       if (items.length === 0) {
-        grid.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color: var(--text-muted);">No hay recursos que coincidan con la búsqueda.</p>`;
+        grid.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color: var(--text-muted); padding: 2rem;">Aún no hay recursos guardados en esta búsqueda. ¡Sé el primero en compartir uno!</p>`;
         return;
       }
 
@@ -314,7 +374,7 @@
             </div>
           </div>
           <div class="card-footer">
-            <a href="${item.url_archivo}" target="_blank" class="btn-download">Consultar →</a>
+            <a href="${item.url_archivo}" target="_blank" class="btn-download">Consultar Material →</a>
             <button class="like-btn" onclick="addLike(${item.id}, ${item.likes})">❤️ <span>${item.likes || 0}</span></button>
           </div>
         </div>
@@ -351,7 +411,7 @@
       } else {
         closeModal();
         document.getElementById('resourceForm').reset();
-        loadResources(); // Recargar inmediatamente
+        loadResources();
       }
     }
 
