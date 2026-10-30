@@ -16,6 +16,7 @@
       --text-main: #f0f3f8;
       --text-muted: #94a3b8;
       --border-color: #23293e;
+      --danger-red: #ff4757;
     }
 
     body {
@@ -56,7 +57,6 @@
       padding: 2rem 1rem;
     }
 
-    /* Banner Principal */
     .upload-banner {
       background: linear-gradient(135deg, rgba(255, 107, 53, 0.12), rgba(0, 210, 255, 0.08));
       border: 1px dashed rgba(255, 107, 53, 0.4);
@@ -119,7 +119,6 @@
       transform: translateY(-2px);
     }
 
-    /* Formulario Integrado (Inline) */
     .upload-panel {
       display: none;
       background: var(--card-bg);
@@ -133,17 +132,6 @@
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(-10px); }
       to { opacity: 1; transform: translateY(0); }
-    }
-
-    .drop-zone {
-      border: 2px dashed rgba(0, 210, 255, 0.4);
-      border-radius: 10px;
-      padding: 1.5rem;
-      text-align: center;
-      background: rgba(0, 210, 255, 0.03);
-      color: var(--text-muted);
-      margin-bottom: 1.5rem;
-      cursor: pointer;
     }
 
     .privacy-notice {
@@ -218,6 +206,36 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      position: relative;
+    }
+
+    .card-actions-top {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      display: flex;
+      gap: 0.3rem;
+    }
+
+    .btn-icon {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      border-radius: 6px;
+      padding: 0.2rem 0.5rem;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+
+    .btn-icon:hover {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+    }
+
+    .btn-icon.delete:hover {
+      background: rgba(255, 71, 87, 0.2);
+      color: var(--danger-red);
+      border-color: var(--danger-red);
     }
 
     .card-tag {
@@ -235,6 +253,7 @@
     .card h3 {
       margin: 0.3rem 0 0.6rem 0;
       font-size: 1.15rem;
+      padding-right: 2.5rem;
     }
 
     .card-meta {
@@ -289,7 +308,6 @@
 
   <div class="container">
 
-    <!-- Banner Principal -->
     <div class="upload-banner">
       <h2>🔥 ¿Tienes un parcial, taller o guía para salvar el corte?</h2>
       <p>Súbelo en segundos a la comunidad. Ayuda a tus compañeros de carrera a preparar sus exámenes con material libre, anónimo y colaborativo.</p>
@@ -299,24 +317,20 @@
       </div>
     </div>
 
-    <!-- Panel de Subida Integrado (Inline) -->
+    <!-- Panel de Subida Inline -->
     <div class="upload-panel" id="uploadPanel">
       <h3 style="margin-top: 0; font-size: 1.3rem;">🌱 Sumar Aporte a la Comunidad</h3>
       <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.2rem;">
-        Completa la ficha técnica para que tus compañeros puedan filtrar tu recurso por materia o profesor.
+        Completa la ficha técnica para que tus compañeros puedan filtrar tu recurso.
       </p>
 
       <div class="privacy-notice">
-        🔒 <b>Aviso de Anonimato & Privacidad:</b> Asegúrate de eliminar tu nombre, código estudiantil o datos personales de la portada/encabezado del documento antes de subirlo.
+        🔒 <b>Aviso de Anonimato & Privacidad:</b> Asegúrate de eliminar tu nombre o datos personales del documento antes de subirlo.
       </div>
 
       <form id="resourceForm" onsubmit="submitResource(event)">
-        <div class="drop-zone">
-          📁 <b>Pega aquí la URL de tu archivo en la nube</b> (Drive, Telegram, OneDrive, Dropbox)
-        </div>
-
         <div class="form-group">
-          <label>Enlace del Archivo (URL de acceso libre):</label>
+          <label>Enlace del Archivo (URL de Drive, Telegram, OneDrive, etc.):</label>
           <input type="url" id="inputUrl" placeholder="https://drive.google.com/... o https://t.me/..." required>
         </div>
 
@@ -346,6 +360,10 @@
               <option value="Apuntes">Resumen / Apuntes de Clase</option>
             </select>
           </div>
+          <div class="form-group">
+            <label>🔐 Crea un PIN de 4 dígitos (para editar/borrar luego):</label>
+            <input type="password" id="inputPin" maxlength="4" pattern="[0-9]{4}" placeholder="Ej: 1234" required>
+          </div>
         </div>
 
         <div style="display:flex; gap: 1rem; margin-top: 1.2rem;">
@@ -367,14 +385,12 @@
 
   </div>
 
-  <!-- Pie de Página Comunitaria -->
   <footer>
     <p><b>Drakonian Peach Society</b> es una iniciativa estudiantil independiente.<br>
     Construyendo el conocimiento colectivo libre, ético y descentralizado para la comunidad académica.</p>
   </footer>
 
   <script>
-    // Configuración de Supabase
     const SUPABASE_URL = "https://dchtomgwzepijkkhejuk.supabase.co";
     const SUPABASE_KEY = "sb_publishable_blxDPthnT6bMoX4jwTB5Ig_vHcwjkUM";
     const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -410,6 +426,9 @@
 
       grid.innerHTML = items.map(item => `
         <div class="card">
+          <div class="card-actions-top">
+            <button class="btn-icon delete" onclick="deleteResource(${item.id}, '${item.pin}')" title="Eliminar mi recurso">🗑️</button>
+          </div>
           <div>
             <span class="card-tag">${item.tipo}</span>
             <h3>${item.titulo}</h3>
@@ -447,6 +466,7 @@
         profesor: document.getElementById('inputProf').value,
         tipo: document.getElementById('inputType').value,
         url_archivo: document.getElementById('inputUrl').value,
+        pin: document.getElementById('inputPin').value,
         likes: 0
       };
 
@@ -461,6 +481,23 @@
       }
     }
 
+    async function deleteResource(id, realPin) {
+      const userPin = prompt("🔑 Ingresa el PIN de 4 dígitos que creaste para borrar este recurso:");
+      if (!userPin) return;
+
+      if (userPin === realPin) {
+        const { error } = await _supabase.from('recursos').delete().eq('id', id);
+        if (error) {
+          alert("Error al eliminar: " + error.message);
+        } else {
+          alert("Recurso eliminado correctamente.");
+          loadResources();
+        }
+      } else {
+        alert("❌ PIN incorrecto. No tienes permiso para eliminar este recurso.");
+      }
+    }
+
     async function addLike(id, currentLikes) {
       const { error } = await _supabase
         .from('recursos')
@@ -470,7 +507,6 @@
       if (!error) loadResources();
     }
 
-    // Cargar recursos al iniciar
     loadResources();
   </script>
 </body>
