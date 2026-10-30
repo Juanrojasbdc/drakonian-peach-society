@@ -326,6 +326,10 @@
             <input type="text" id="inputTitle" placeholder="Ej: Parcial 2º Corte Resuelto" required>
           </div>
           <div class="form-group">
+            <label>Universidad o Institución educativa:</label>
+            <input type="text" id="inputUni" placeholder="Ej: Universidad Nacional, UniAndes..." required>
+          </div>
+          <div class="form-group">
             <label>Materia / Asignatura:</label>
             <input type="text" id="inputSubject" placeholder="Ej: Geografía Económica" required>
           </div>
@@ -366,7 +370,7 @@
   <!-- Pie de Página Comunitaria -->
   <footer>
     <p><b>Drakonian Peach Society</b> es una iniciativa estudiantil independiente.<br>
-    Construyendo el conocimiento colectivo libre, ético y descentralizado para la Universidad Piloto de Colombia.</p>
+    Construyendo el conocimiento colectivo libre, ético y descentralizado para la comunidad académica.</p>
   </footer>
 
   <script>
@@ -438,7 +442,7 @@
       e.preventDefault();
       const newResource = {
         titulo: document.getElementById('inputTitle').value,
-        universidad: "Universidad Piloto de Colombia",
+        universidad: document.getElementById('inputUni').value,
         materia: document.getElementById('inputSubject').value,
         profesor: document.getElementById('inputProf').value,
         tipo: document.getElementById('inputType').value,
