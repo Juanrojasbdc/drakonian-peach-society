@@ -181,4 +181,293 @@
       border: 1px solid var(--border-color);
       border-radius: 8px;
       color: var(--text-main);
-      box-sizing: border-box
+      box-sizing: border-box;
+      font-size: 0.92rem;
+    }
+
+    .search-section {
+      background: var(--card-bg);
+      padding: 1.2rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      margin-bottom: 2rem;
+    }
+
+    .search-bar {
+      width: 100%;
+      padding: 0.85rem 1.1rem;
+      background: var(--bg-dark);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--text-main);
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card-tag {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: bold;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      background: rgba(0, 210, 255, 0.12);
+      color: var(--accent-blue);
+      display: inline-block;
+      margin-bottom: 0.6rem;
+    }
+
+    .card h3 {
+      margin: 0.3rem 0 0.6rem 0;
+      font-size: 1.15rem;
+    }
+
+    .card-meta {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.2rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .btn-download {
+      color: var(--accent-orange);
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 0.92rem;
+    }
+
+    .like-btn {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 0.3rem 0.7rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    footer {
+      margin-top: 4rem;
+      padding: 2.5rem 1rem;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Drakonian Peach Society</h1>
+    <p>El repositorio académico hiperlocal hecho por y para la comunidad universitaria.</p>
+  </header>
+
+  <div class="container">
+
+    <!-- Banner Principal -->
+    <div class="upload-banner">
+      <h2>🔥 ¿Tienes un parcial, taller o guía para salvar el corte?</h2>
+      <p>Súbelo en segundos a la comunidad. Ayuda a tus compañeros de carrera a preparar sus exámenes con material libre, anónimo y colaborativo.</p>
+      <div class="btn-group">
+        <button class="btn-action" onclick="toggleUploadPanel()">➕ Compartir un Recurso</button>
+        <a href="https://t.me/DrakonianAportes" target="_blank" class="btn-telegram">✈️ Canal de Telegram</a>
+      </div>
+    </div>
+
+    <!-- Panel de Subida Integrado (Inline) -->
+    <div class="upload-panel" id="uploadPanel">
+      <h3 style="margin-top: 0; font-size: 1.3rem;">🌱 Sumar Aporte a la Comunidad</h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.2rem;">
+        Completa la ficha técnica para que tus compañeros puedan filtrar tu recurso por materia o profesor.
+      </p>
+
+      <div class="privacy-notice">
+        🔒 <b>Aviso de Anonimato & Privacidad:</b> Asegúrate de eliminar tu nombre, código estudiantil o datos personales de la portada/encabezado del documento antes de subirlo.
+      </div>
+
+      <form id="resourceForm" onsubmit="submitResource(event)">
+        <div class="drop-zone">
+          📁 <b>Pega aquí la URL de tu archivo en la nube</b> (Drive, Telegram, OneDrive, Dropbox)
+        </div>
+
+        <div class="form-group">
+          <label>Enlace del Archivo (URL de acceso libre):</label>
+          <input type="url" id="inputUrl" placeholder="https://drive.google.com/... o https://t.me/..." required>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Título del Recurso:</label>
+            <input type="text" id="inputTitle" placeholder="Ej: Parcial 2º Corte Resuelto" required>
+          </div>
+          <div class="form-group">
+            <label>Materia / Asignatura:</label>
+            <input type="text" id="inputSubject" placeholder="Ej: Geografía Económica" required>
+          </div>
+          <div class="form-group">
+            <label>Profesor:</label>
+            <input type="text" id="inputProf" placeholder="Ej: Andrés Ortega" required>
+          </div>
+          <div class="form-group">
+            <label>Tipo de Recurso:</label>
+            <select id="inputType">
+              <option value="Parcial Pasado">Parcial Pasado</option>
+              <option value="Taller Resuelto">Taller / Guía Resuelta</option>
+              <option value="Plantilla Excel">Plantilla Excel / Dataset</option>
+              <option value="Apuntes">Resumen / Apuntes de Clase</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display:flex; gap: 1rem; margin-top: 1.2rem;">
+          <button type="submit" class="btn-action" style="flex:1;">🚀 Publicar en la Comunidad</button>
+          <button type="button" class="btn-action" style="background:#222; color:#aaa;" onclick="toggleUploadPanel()">Cerrar</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Buscador -->
+    <div class="search-section">
+      <input type="text" id="searchInput" class="search-bar" placeholder="🔍 Buscar por materia, profesor (Ej: Andrés Ortega), o tema..." onkeyup="filterCards()">
+    </div>
+
+    <!-- Grilla de Recursos -->
+    <div class="resources-grid" id="resourcesGrid">
+      <p style="text-align:center; grid-column: 1/-1; color: var(--text-muted);">Cargando el banco de recursos en tiempo real...</p>
+    </div>
+
+  </div>
+
+  <!-- Pie de Página Comunitaria -->
+  <footer>
+    <p><b>Drakonian Peach Society</b> es una iniciativa estudiantil independiente.<br>
+    Construyendo el conocimiento colectivo libre, ético y descentralizado para la Universidad Piloto de Colombia.</p>
+  </footer>
+
+  <script>
+    // Configuración de Supabase
+    const SUPABASE_URL = "https://dchtomgwzepijkkhejuk.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_blxDPthnT6bMoX4jwTB5Ig_vHcwjkUM";
+    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    let allResources = [];
+
+    function toggleUploadPanel() {
+      const panel = document.getElementById('uploadPanel');
+      panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
+    }
+
+    async function loadResources() {
+      const { data, error } = await _supabase
+        .from('recursos')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error("Error al cargar:", error);
+        return;
+      }
+
+      allResources = data;
+      renderResources(allResources);
+    }
+
+    function renderResources(items) {
+      const grid = document.getElementById('resourcesGrid');
+      if (items.length === 0) {
+        grid.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color: var(--text-muted); padding: 2rem;">Aún no hay recursos guardados en esta búsqueda. ¡Sé el primero en compartir uno!</p>`;
+        return;
+      }
+
+      grid.innerHTML = items.map(item => `
+        <div class="card">
+          <div>
+            <span class="card-tag">${item.tipo}</span>
+            <h3>${item.titulo}</h3>
+            <div class="card-meta">
+              📍 <b>${item.universidad}</b><br>
+              👨‍🏫 Profe: ${item.profesor}<br>
+              📚 ${item.materia}
+            </div>
+          </div>
+          <div class="card-footer">
+            <a href="${item.url_archivo}" target="_blank" class="btn-download">Consultar Material →</a>
+            <button class="like-btn" onclick="addLike(${item.id}, ${item.likes})">❤️ <span>${item.likes || 0}</span></button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterCards() {
+      const term = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = allResources.filter(r => 
+        r.titulo.toLowerCase().includes(term) ||
+        r.materia.toLowerCase().includes(term) ||
+        r.profesor.toLowerCase().includes(term) ||
+        r.universidad.toLowerCase().includes(term)
+      );
+      renderResources(filtered);
+    }
+
+    async function submitResource(e) {
+      e.preventDefault();
+      const newResource = {
+        titulo: document.getElementById('inputTitle').value,
+        universidad: "Universidad Piloto de Colombia",
+        materia: document.getElementById('inputSubject').value,
+        profesor: document.getElementById('inputProf').value,
+        tipo: document.getElementById('inputType').value,
+        url_archivo: document.getElementById('inputUrl').value,
+        likes: 0
+      };
+
+      const { error } = await _supabase.from('recursos').insert([newResource]);
+
+      if (error) {
+        alert("Error al publicar: " + error.message);
+      } else {
+        toggleUploadPanel();
+        document.getElementById('resourceForm').reset();
+        loadResources();
+      }
+    }
+
+    async function addLike(id, currentLikes) {
+      const { error } = await _supabase
+        .from('recursos')
+        .update({ likes: currentLikes + 1 })
+        .eq('id', id);
+
+      if (!error) loadResources();
+    }
+
+    // Cargar recursos al iniciar
+    loadResources();
+  </script>
+</body>
+</html>
