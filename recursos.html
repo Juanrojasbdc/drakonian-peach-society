@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Recursos & Parciales — Drakonian Peach Society</title>
   <link rel="icon" type="image/png" href="favicon.png">
+  <!-- Carga de Supabase JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root {
       --bg-dark: #0a0b10;
@@ -49,7 +51,44 @@
       padding: 2rem 1rem;
     }
 
-    /* Buscador y Filtros */
+    .upload-banner {
+      background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(0, 210, 255, 0.1));
+      border: 1px dashed var(--accent-orange);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .btn-action {
+      background: var(--accent-orange);
+      color: #fff;
+      padding: 0.7rem 1.4rem;
+      border-radius: 8px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+
+    .btn-telegram {
+      background: #0088cc;
+      color: #fff;
+      padding: 0.7rem 1.4rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
     .search-section {
       background: var(--card-bg);
       padding: 1.5rem;
@@ -70,64 +109,6 @@
       margin-bottom: 1rem;
     }
 
-    .search-bar:focus {
-      outline: none;
-      border-color: var(--accent-orange);
-    }
-
-    .filters-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-    }
-
-    select {
-      width: 100%;
-      padding: 0.6rem;
-      background: var(--bg-dark);
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      color: var(--text-main);
-    }
-
-    /* Botones de Subida */
-    .upload-banner {
-      background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(0, 210, 255, 0.1));
-      border: 1px dashed var(--accent-orange);
-      border-radius: 12px;
-      padding: 1.5rem;
-      text-align: center;
-      margin-bottom: 2.5rem;
-    }
-
-    .btn-group {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 1rem;
-    }
-
-    .btn-upload {
-      background: var(--accent-orange);
-      color: #fff;
-      padding: 0.7rem 1.4rem;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: opacity 0.2s;
-    }
-
-    .btn-telegram {
-      background: #0088cc;
-      color: #fff;
-      padding: 0.7rem 1.4rem;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    /* Grid de Recursos */
     .resources-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -190,8 +171,33 @@
       font-size: 0.9rem;
     }
 
-    .like-btn:hover {
-      color: #e63946;
+    /* Modal Formulario */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 12px;
+      max-width: 450px;
+      width: 90%;
+      border: 1px solid var(--border-color);
+    }
+
+    .modal-content h2 { margin-top: 0; }
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: block; margin-bottom: 0.3rem; font-size: 0.9rem; }
+    .form-group input, .form-group select {
+      width: 100%; padding: 0.6rem;
+      background: var(--bg-dark); border: 1px solid var(--border-color);
+      border-radius: 6px; color: var(--text-main); box-sizing: border-box;
     }
   </style>
 </head>
@@ -199,113 +205,170 @@
 
   <header>
     <h1>Drakonian Peach Society</h1>
-    <p>Índice Hiperlocal de Recursos, Parciales & Solucionarios</p>
+    <p>Índice Hiperlocal de Recursos & Parciales en Tiempo Real</p>
   </header>
 
   <div class="container">
 
-    <!-- Banner para Aportes de la Comunidad (100% Seguro vía Telegram) -->
     <div class="upload-banner">
-      <h2>¿Tienes un parcial, taller o guía para salvar el corte?</h2>
-      <p>Súbelo anónimamente a través de nuestro canal verificado. Sin cuentas, sin virus y con total seguridad.</p>
+      <h2>¿Tienes un parcial o guía para compartir?</h2>
+      <p>Publica directamente en la plataforma o envía por nuestro canal verificado.</p>
       <div class="btn-group">
-        <a href="https://t.me/DrakonianAportes" target="_blank" class="btn-telegram">
-          ✈️ Enviar Recurso por Telegram (Comunidad Oficial)
-        </a>
+        <button class="btn-action" onclick="openModal()">➕ Publicar Recurso Ahora</button>
+        <a href="https://t.me/DrakonianAportes" target="_blank" class="btn-telegram">✈️ Canal Telegram</a>
       </div>
     </div>
 
-    <!-- Buscador e Interfaz de Filtros -->
     <div class="search-section">
-      <input type="text" id="searchInput" class="search-bar" placeholder="🔍 Buscar por materia, profesor (Ej: Andrés Ortega), o palabra clave...">
-      
-      <div class="filters-grid">
-        <select id="universityFilter">
-          <option value="">Todas las Universidades</option>
-          <option value="piloto" selected>Universidad Piloto de Colombia</option>
-          <option value="otra">Otras Instituciones</option>
-        </select>
-
-        <select id="subjectFilter">
-          <option value="">Todas las Materias</option>
-          <option value="geografia">Geografía Económica</option>
-          <option value="micro">Microeconomía</option>
-          <option value="excel">Excel Aplicado / Herramientas</option>
-        </select>
-
-        <select id="typeFilter">
-          <option value="">Todos los Tipos</option>
-          <option value="parcial">Parcial Pasado</option>
-          <option value="taller">Taller / Guía Resuelta</option>
-          <option value="excel">Plantilla Excel / Dataset</option>
-        </select>
-      </div>
+      <input type="text" id="searchInput" class="search-bar" placeholder="🔍 Buscar por materia, profesor (Ej: Andrés Ortega)..." onkeyup="filterCards()">
     </div>
 
-    <!-- Resultados / Listado de Recursos -->
     <div class="resources-grid" id="resourcesGrid">
+      <p style="text-align:center; color: var(--text-muted);">Cargando recursos en tiempo real...</p>
+    </div>
 
-      <!-- Ejemplo 1 de Recurso Real -->
-      <div class="card" data-subject="geografia" data-professor="Andrés Ortega" data-type="taller">
-        <div>
-          <span class="card-tag">Taller Resuelto</span>
-          <h3>Taller 2º Corte — ArcGIS Pro & DIAN</h3>
-          <div class="card-meta">
-            📍 <b>Universidad Piloto</b><br>
-            👨‍🏫 Profe: Andrés Ortega<br>
-            📚 Geografía Económica
-          </div>
-        </div>
-        <div class="card-footer">
-          <a href="#" target="_blank" class="btn-download">Consultar →</a>
-          <button class="like-btn" onclick="addLike(this)">❤️ <span>12</span></button>
-        </div>
-      </div>
+  </div>
 
-      <!-- Ejemplo 2 de Recurso Real -->
-      <div class="card" data-subject="micro" data-professor="General" data-type="parcial">
-        <div>
-          <span class="card-tag">Parcial Pasado</span>
-          <h3>Examen Final Resuelto — Microeconomía I</h3>
-          <div class="card-meta">
-            📍 <b>Universidad Piloto</b><br>
-            👨‍🏫 Profe: Cátedra General<br>
-            📚 Microeconomía
-          </div>
+  <!-- Modal para publicar recurso -->
+  <div class="modal" id="uploadModal">
+    <div class="modal-content">
+      <h2>Publicar Aporte</h2>
+      <form id="resourceForm" onsubmit="submitResource(event)">
+        <div class="form-group">
+          <label>Título del Recurso:</label>
+          <input type="text" id="inputTitle" placeholder="Ej: Parcial 2º Corte Resuelto" required>
         </div>
-        <div class="card-footer">
-          <a href="#" target="_blank" class="btn-download">Consultar →</a>
-          <button class="like-btn" onclick="addLike(this)">❤️ <span>28</span></button>
+        <div class="form-group">
+          <label>Universidad:</label>
+          <input type="text" id="inputUni" value="Universidad Piloto de Colombia" required>
         </div>
-      </div>
-
+        <div class="form-group">
+          <label>Materia / Asignatura:</label>
+          <input type="text" id="inputSubject" placeholder="Ej: Geografía Económica" required>
+        </div>
+        <div class="form-group">
+          <label>Profesor:</label>
+          <input type="text" id="inputProf" placeholder="Ej: Andrés Ortega" required>
+        </div>
+        <div class="form-group">
+          <label>Tipo de Recurso:</label>
+          <select id="inputType">
+            <option value="Parcial Pasado">Parcial Pasado</option>
+            <option value="Taller Resuelto">Taller / Guía Resuelta</option>
+            <option value="Plantilla Excel">Plantilla Excel / Dataset</option>
+            <option value="Apuntes">Resumen / Apuntes</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Enlace del Archivo (Drive, Telegram o enlace directo):</label>
+          <input type="url" id="inputUrl" placeholder="https://..." required>
+        </div>
+        <div style="display:flex; gap: 1rem; margin-top: 1.5rem;">
+          <button type="submit" class="btn-action" style="flex:1;">Publicar Instantáneamente</button>
+          <button type="button" class="btn-action" style="background:#444;" onclick="closeModal()">Cancelar</button>
+        </div>
+      </form>
     </div>
   </div>
 
   <script>
-    // Buscador en Tiempo Real
-    const searchInput = document.getElementById('searchInput');
-    const cards = document.querySelectorAll('.card');
+    // Configuración de Supabase
+    const SUPABASE_URL = "https://dchtomgwzepijkkhejuk.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_blxDPthnT6bMoX4jwTB5Ig_vHcwjkUM";
+    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    searchInput.addEventListener('keyup', function(e) {
-      const term = e.target.value.toLowerCase();
-      cards.forEach(card => {
-        const text = card.textContent.toLowerCase();
-        if (text.includes(term)) {
-          card.style.display = "flex";
-        } else {
-          card.style.display = "none";
-        }
-      });
-    });
+    let allResources = [];
 
-    // Contador Simple de Corazones (Front-end local)
-    function addLike(btn) {
-      const span = btn.querySelector('span');
-      let current = parseInt(span.textContent);
-      span.textContent = current + 1;
-      btn.style.color = "#e63946";
+    // Cargar recursos al entrar
+    async function loadResources() {
+      const { data, error } = await _supabase
+        .from('recursos')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error("Error al cargar:", error);
+        return;
+      }
+
+      allResources = data;
+      renderResources(allResources);
     }
+
+    function renderResources(items) {
+      const grid = document.getElementById('resourcesGrid');
+      if (items.length === 0) {
+        grid.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color: var(--text-muted);">No hay recursos que coincidan con la búsqueda.</p>`;
+        return;
+      }
+
+      grid.innerHTML = items.map(item => `
+        <div class="card">
+          <div>
+            <span class="card-tag">${item.tipo}</span>
+            <h3>${item.titulo}</h3>
+            <div class="card-meta">
+              📍 <b>${item.universidad}</b><br>
+              👨‍🏫 Profe: ${item.profesor}<br>
+              📚 ${item.materia}
+            </div>
+          </div>
+          <div class="card-footer">
+            <a href="${item.url_archivo}" target="_blank" class="btn-download">Consultar →</a>
+            <button class="like-btn" onclick="addLike(${item.id}, ${item.likes})">❤️ <span>${item.likes || 0}</span></button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterCards() {
+      const term = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = allResources.filter(r => 
+        r.titulo.toLowerCase().includes(term) ||
+        r.materia.toLowerCase().includes(term) ||
+        r.profesor.toLowerCase().includes(term) ||
+        r.universidad.toLowerCase().includes(term)
+      );
+      renderResources(filtered);
+    }
+
+    async function submitResource(e) {
+      e.preventDefault();
+      const newResource = {
+        titulo: document.getElementById('inputTitle').value,
+        universidad: document.getElementById('inputUni').value,
+        materia: document.getElementById('inputSubject').value,
+        profesor: document.getElementById('inputProf').value,
+        tipo: document.getElementById('inputType').value,
+        url_archivo: document.getElementById('inputUrl').value,
+        likes: 0
+      };
+
+      const { error } = await _supabase.from('recursos').insert([newResource]);
+
+      if (error) {
+        alert("Error al publicar: " + error.message);
+      } else {
+        closeModal();
+        document.getElementById('resourceForm').reset();
+        loadResources(); // Recargar inmediatamente
+      }
+    }
+
+    async function addLike(id, currentLikes) {
+      const { error } = await _supabase
+        .from('recursos')
+        .update({ likes: currentLikes + 1 })
+        .eq('id', id);
+
+      if (!error) loadResources();
+    }
+
+    function openModal() { document.getElementById('uploadModal').style.display = 'flex'; }
+    function closeModal() { document.getElementById('uploadModal').style.display = 'none'; }
+
+    // Ejecutar carga inicial
+    loadResources();
   </script>
 </body>
 </html>
