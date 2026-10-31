@@ -222,14 +222,15 @@
       border: 1px solid var(--border-color);
       color: var(--text-muted);
       border-radius: 6px;
-      padding: 0.2rem 0.5rem;
+      padding: 0.25rem 0.5rem;
       cursor: pointer;
       font-size: 0.8rem;
     }
 
     .btn-icon:hover {
-      background: rgba(255,255,255,0.15);
-      color: #fff;
+      background: rgba(0, 210, 255, 0.15);
+      color: var(--accent-blue);
+      border-color: var(--accent-blue);
     }
 
     .btn-icon.delete:hover {
@@ -253,7 +254,7 @@
     .card h3 {
       margin: 0.3rem 0 0.6rem 0;
       font-size: 1.15rem;
-      padding-right: 2.5rem;
+      padding-right: 3.5rem;
     }
 
     .card-meta {
@@ -312,14 +313,14 @@
       <h2>🔥 ¿Tienes un parcial, taller o guía para salvar el corte?</h2>
       <p>Súbelo en segundos a la comunidad. Ayuda a tus compañeros de carrera a preparar sus exámenes con material libre, anónimo y colaborativo.</p>
       <div class="btn-group">
-        <button class="btn-action" onclick="toggleUploadPanel()">➕ Compartir un Recurso</button>
+        <button class="btn-action" onclick="openCreatePanel()">➕ Compartir un Recurso</button>
         <a href="https://t.me/DrakonianAportes" target="_blank" class="btn-telegram">✈️ Canal de Telegram</a>
       </div>
     </div>
 
     <!-- Panel de Subida Inline -->
     <div class="upload-panel" id="uploadPanel">
-      <h3 style="margin-top: 0; font-size: 1.3rem;">🌱 Sumar Aporte a la Comunidad</h3>
+      <h3 id="panelTitle" style="margin-top: 0; font-size: 1.3rem;">🌱 Sumar Aporte a la Comunidad</h3>
       <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.2rem;">
         Completa la ficha técnica para que tus compañeros puedan filtrar tu recurso.
       </p>
@@ -329,6 +330,8 @@
       </div>
 
       <form id="resourceForm" onsubmit="submitResource(event)">
+        <input type="hidden" id="editResourceId" value="">
+
         <div class="form-group">
           <label>Enlace del Archivo (URL de Drive, Telegram, OneDrive, etc.):</label>
           <input type="url" id="inputUrl" placeholder="https://drive.google.com/... o https://t.me/..." required>
@@ -361,14 +364,14 @@
             </select>
           </div>
           <div class="form-group">
-            <label>🔐 Crea un PIN de 4 dígitos (para editar/borrar luego):</label>
+            <label id="pinLabel">🔐 Crea un PIN de 4 dígitos (para editar/borrar luego):</label>
             <input type="password" id="inputPin" maxlength="4" pattern="[0-9]{4}" placeholder="Ej: 1234" required>
           </div>
         </div>
 
         <div style="display:flex; gap: 1rem; margin-top: 1.2rem;">
-          <button type="submit" class="btn-action" style="flex:1;">🚀 Publicar en la Comunidad</button>
-          <button type="button" class="btn-action" style="background:#222; color:#aaa;" onclick="toggleUploadPanel()">Cerrar</button>
+          <button type="submit" id="btnSubmitForm" class="btn-action" style="flex:1;">🚀 Publicar en la Comunidad</button>
+          <button type="button" class="btn-action" style="background:#222; color:#aaa;" onclick="closeUploadPanel()">Cancelar</button>
         </div>
       </form>
     </div>
@@ -397,9 +400,19 @@
 
     let allResources = [];
 
-    function toggleUploadPanel() {
-      const panel = document.getElementById('uploadPanel');
-      panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
+    function openCreatePanel() {
+      document.getElementById('editResourceId').value = "";
+      document.getElementById('resourceForm').reset();
+      document.getElementById('panelTitle').innerText = "🌱 Sumar Aporte a la Comunidad";
+      document.getElementById('btnSubmitForm').innerText = "🚀 Publicar en la Comunidad";
+      document.getElementById('pinLabel').innerText = "🔐 Crea un PIN de 4 dígitos (para editar/borrar luego):";
+      document.getElementById('uploadPanel').style.display = 'block';
+      window.scrollTo({ top: document.getElementById('uploadPanel').offsetTop - 50, behavior: 'smooth' });
+    }
+
+    function closeUploadPanel() {
+      document.getElementById('uploadPanel').style.display = 'none';
+      document.getElementById('resourceForm').reset();
     }
 
     async function loadResources() {
@@ -427,6 +440,7 @@
       grid.innerHTML = items.map(item => `
         <div class="card">
           <div class="card-actions-top">
+            <button class="btn-icon" onclick="prepareEditResource(${item.id})" title="Editar mi recurso">✏️</button>
             <button class="btn-icon delete" onclick="deleteResource(${item.id}, '${item.pin}')" title="Eliminar mi recurso">🗑️</button>
           </div>
           <div>
@@ -457,27 +471,68 @@
       renderResources(filtered);
     }
 
+    function prepareEditResource(id) {
+      const item = allResources.find(r => r.id === id);
+      if (!item) return;
+
+      const userPin = prompt("🔑 Ingresa el PIN de 4 dígitos con el que creaste este recurso para editarlo:");
+      if (!userPin) return;
+
+      if (userPin === item.pin) {
+        document.getElementById('editResourceId').value = item.id;
+        document.getElementById('inputTitle').value = item.titulo;
+        document.getElementById('inputUni').value = item.universidad;
+        document.getElementById('inputSubject').value = item.materia;
+        document.getElementById('inputProf').value = item.profesor;
+        document.getElementById('inputType').value = item.tipo;
+        document.getElementById('inputUrl').value = item.url_archivo;
+        document.getElementById('inputPin').value = item.pin;
+
+        document.getElementById('panelTitle').innerText = "✏️ Editar mi Aporte";
+        document.getElementById('btnSubmitForm').innerText = "💾 Guardar Cambios";
+        document.getElementById('pinLabel').innerText = "🔐 PIN de Edición:";
+
+        document.getElementById('uploadPanel').style.display = 'block';
+        window.scrollTo({ top: document.getElementById('uploadPanel').offsetTop - 50, behavior: 'smooth' });
+      } else {
+        alert("❌ PIN incorrecto. No tienes permiso para editar este recurso.");
+      }
+    }
+
     async function submitResource(e) {
       e.preventDefault();
-      const newResource = {
+      const editId = document.getElementById('editResourceId').value;
+
+      const resourceData = {
         titulo: document.getElementById('inputTitle').value,
         universidad: document.getElementById('inputUni').value,
         materia: document.getElementById('inputSubject').value,
         profesor: document.getElementById('inputProf').value,
         tipo: document.getElementById('inputType').value,
         url_archivo: document.getElementById('inputUrl').value,
-        pin: document.getElementById('inputPin').value,
-        likes: 0
+        pin: document.getElementById('inputPin').value
       };
 
-      const { error } = await _supabase.from('recursos').insert([newResource]);
-
-      if (error) {
-        alert("Error al publicar: " + error.message);
+      if (editId) {
+        // Actualizar existente
+        const { error } = await _supabase.from('recursos').update(resourceData).eq('id', editId);
+        if (error) {
+          alert("Error al actualizar: " + error.message);
+        } else {
+          alert("¡Recurso actualizado con éxito!");
+          closeUploadPanel();
+          loadResources();
+        }
       } else {
-        toggleUploadPanel();
-        document.getElementById('resourceForm').reset();
-        loadResources();
+        // Crear nuevo
+        resourceData.likes = 0;
+        const { error } = await _supabase.from('recursos').insert([resourceData]);
+        if (error) {
+          alert("Error al publicar: " + error.message);
+        } else {
+          closeUploadPanel();
+          loadResources();
+        }
       }
     }
 
