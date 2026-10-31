@@ -1,292 +1,216 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta name="google-site-verification" content="DkPNaDBk0yUPBW48u2nR7bB1iPP6-ywEr8R06fKrWas" />
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DPS. — Drakonian Peach Society</title>
+  <title>Drakonian Peach Society — Hub Estudiantil</title>
   <link rel="icon" type="image/png" href="favicon.png">
-  <!-- Metadatos de SEO y Redes Sociales (Open Graph) -->
-  <meta name="description" content="El hub definitivo para estudiantes, creadores y mentes que desafían el statu quo. Recursos académicos, comunidad y eventos.">
-  
-  <!-- Open Graph para WhatsApp, Instagram, Facebook y LinkedIn -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://drakonianpeachsociety.com/">
-  <meta property="og:title" content="DPS. — Drakonian Peach Society">
-  <meta property="og:description" content="El hub definitivo de recursos, comunidad y herramientas para exprimir al máximo tu etapa estudiantil.">
-  <meta property="og:site_name" content="Drakonian Peach Society">
-
-  <!-- Twitter / X Cards -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="DPS. — Drakonian Peach Society">
-  <meta name="twitter:description" content="El hub definitivo para estudiantes y creadores. Maximiza tu etapa académica con nosotros.">
   <style>
     :root {
-      --bg-color: #0B0C0B;        /* Fondo oscuro exacto */
-      --card-bg: #161716;         /* Fondo de tarjetas en armonía */
-      --text-main: #FFFFFF;       /* Blanco puro */
-      --text-muted: #a0a0a0;      /* Gris para detalles secundarios */
-      --accent-green: #00F48E;    /* Verde exacto de tu marca */
-      --accent-orange: #FD691D;   /* Naranja exacto de tu marca */
-      --border-color: #242524;    /* Bordes sutiles */
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --bg-dark: #0a0b10;
+      --card-bg: #121520;
+      --accent-orange: #ff6b35;
+      --accent-green: #00e676;
+      --text-main: #f0f3f8;
+      --text-muted: #94a3b8;
+      --border-color: #23293e;
     }
 
     body {
-      background-color: var(--bg-color);
+      background-color: var(--bg-dark);
       color: var(--text-main);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      margin: 0;
+      padding: 0;
       display: flex;
-      justify-content: center;
-      padding: 20px;
+      flex-direction: column;
       min-height: 100vh;
     }
 
     .container {
-      width: 100%;
       max-width: 680px;
-      margin-top: 40px;
+      margin: 0 auto;
+      padding: 3rem 1rem;
+      flex: 1;
     }
 
     header {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 2rem;
     }
 
-    .logo-title {
-      font-size: 2.5rem;
-      font-weight: 800;
+    .logo {
+      font-size: 2.8rem;
+      font-weight: 900;
       letter-spacing: -1px;
+      color: #fff;
+      margin: 0;
     }
 
-    .dot {
+    .logo span {
       color: var(--accent-orange);
     }
 
     .subtitle {
       color: var(--accent-green);
       font-size: 0.95rem;
-      font-weight: 600;
-      letter-spacing: 2px;
+      font-weight: bold;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
-      margin-top: 6px;
+      margin-top: 0.4rem;
     }
 
-    .author {
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      margin-top: 8px;
-    }
-
-    /* Box Manifiesto */
-    .manifesto-box {
-      background-color: var(--card-bg);
+    .hero-card {
+      background: var(--card-bg);
       border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 32px;
+      border-radius: 14px;
+      padding: 1.8rem;
       text-align: center;
+      margin-bottom: 2rem;
     }
 
-    .manifesto-title {
-      color: var(--text-main);
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin-bottom: 8px;
+    .hero-card h2 {
+      margin-top: 0;
+      font-size: 1.35rem;
+      color: #fff;
     }
 
-    .manifesto-text {
+    .hero-card p {
       color: var(--text-muted);
-      font-size: 0.9rem;
-      line-height: 1.5;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 0;
     }
 
-    /* Links / Redes */
-    .links-section {
+    .links-container {
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      margin-bottom: 48px;
+      gap: 1rem;
+      margin-bottom: 3rem;
     }
 
-    .link-card {
-      background-color: var(--card-bg);
+    .link-btn {
+      background: var(--card-bg);
       border: 1px solid var(--border-color);
-      padding: 16px 20px;
       border-radius: 12px;
-      text-decoration: none;
+      padding: 1.1rem 1.4rem;
       color: var(--text-main);
+      text-decoration: none;
       font-weight: 600;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       transition: all 0.2s ease;
     }
 
-    .link-card:hover {
+    .link-btn:hover {
       border-color: var(--accent-green);
       transform: translateY(-2px);
+      background: rgba(0, 230, 118, 0.04);
     }
 
-    .link-card span {
+    .link-btn.highlight {
+      border-color: rgba(255, 107, 53, 0.5);
+      background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(0, 230, 118, 0.05));
+    }
+
+    .link-btn.highlight:hover {
+      border-color: var(--accent-orange);
+      background: linear-gradient(135deg, rgba(255, 107, 53, 0.18), rgba(0, 230, 118, 0.08));
+    }
+
+    .link-left {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .arrow {
       color: var(--accent-green);
+      font-size: 1.1rem;
     }
 
-    /* Ecosistema / Roadmap */
     .section-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 20px;
-      border-bottom: 1px solid var(--border-color);
-      padding-bottom: 8px;
-    }
-
-    .grid-roadmap {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
-      margin-bottom: 32px;
-    }
-
-    .roadmap-card {
-      background-color: var(--card-bg);
-      border: 1px solid var(--border-color);
-      padding: 20px;
-      border-radius: 12px;
-    }
-
-    .roadmap-card h3 {
-      font-size: 1rem;
-      font-weight: 700;
-      margin-bottom: 6px;
-      color: var(--text-main);
-    }
-
-    .roadmap-card p {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      line-height: 1.4;
-    }
-
-    /* Blog / Publicaciones */
-    .post-card {
-      background-color: var(--card-bg);
-      border: 1px solid var(--border-color);
-      padding: 20px;
-      border-radius: 12px;
-      margin-bottom: 16px;
-    }
-
-    .post-date {
-      font-size: 0.75rem;
-      color: var(--accent-green);
-      font-weight: 600;
-      margin-bottom: 6px;
-    }
-
-    .post-title {
       font-size: 1.1rem;
       font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .post-excerpt {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      line-height: 1.5;
+      margin-bottom: 1rem;
+      color: #fff;
     }
 
     footer {
+      border-top: 1px solid var(--border-color);
+      padding: 2rem 1rem;
       text-align: center;
-      margin-top: 60px;
-      padding-bottom: 40px;
       color: var(--text-muted);
-      font-size: 0.8rem;
+      font-size: 0.82rem;
+      line-height: 1.6;
+      background: rgba(0,0,0,0.2);
+    }
+
+    footer a {
+      color: var(--text-muted);
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <!-- Encabezado / Branding -->
+
     <header>
-      <h1 class="logo-title">DPS<span class="dot">.</span></h1>
-      <p class="subtitle">DRAKONIAN PEACH SOCIETY</p>
-      <p class="author">By Juan David Rojas | CEO & Founder</p>
+      <h1 class="logo">DPS<span>.</span></h1>
+      <div class="subtitle">Drakonian Peach Society</div>
     </header>
 
-    <!-- Manifiesto DPS -->
-    <section class="manifesto-box">
-      <h2 class="manifesto-title" style="color: var(--text-main);">El Hub Definitivo para Estudiantes</h2>
-      <p class="manifesto-text">
-        Diseñado para maximizar y exprimir al máximo tu etapa académica. Un ecosistema seguro para conectar con personas de tu edad, acceder a herramientas, guías de estudio, eventos e iniciativas presenciales y digitales.
-      </p>
-    </section>
+    <div class="hero-card">
+      <h2>El Hub Definitivo para Estudiantes</h2>
+      <p>Diseñado para maximizar tu etapa académica. Un ecosistema libre, seguro e independiente para acceder a recursos, guías de estudio, herramientas y colaboraciones entre la comunidad estudiantil.</p>
+    </div>
 
-    <!-- Enlaces directos (Instagram, YouTube, TikTok) -->
-    <section class="links-section">
-      <a href="https://www.instagram.com/juanrojasbdc" target="_blank" class="link-card">
-        <span>📸</span> Perfil del CEO en Instagram <span>→</span>
-      </a>
-      <a href="https://www.youtube.com/@Drakonianpeachsociety" target="_blank" class="link-card">
-        <span>▶</span> Canal Oficial de YouTube <span>→</span>
-      </a>
-      <a href="https://www.tiktok.com/@juanrojasbdc" target="_blank" class="link-card">
-        <span>⚡</span> Contenido Corto en TikTok <span>→</span>
-      </a>
-    </section>
+    <div class="section-title">Ecosistema DPS</div>
 
-    <!-- Ecosistema y Roadmap DPS -->
-    <section>
-      <h2 class="section-title">Ecosistema DPS</h2>
-      
-      <div class="grid-roadmap">
-        <a href="recursos.html" style="text-decoration: none; color: inherit; display: block;">
-          <div class="roadmap-card" style="cursor: pointer;">
-            <h3>📚 Biblioteca de Recursos</h3>
-            <p>Guías de estudio, plantillas y archivos compartidos por estudiantes para aprobar materias sin rodeos.</p>
-          </div>
-        </a>
-        <a href="eventos.html" style="text-decoration: none; color: inherit; display: block;">
-        <div class="roadmap-card" style="cursor: pointer;">
-          <h3>🎉 Directorio de Eventos</h3>
-          <p>Canales seguros para conocer gente, asistir a eventos gratuitos y conectar en tiempo real.</p>
+    <div class="links-container">
+      <a href="recursos.html" class="link-btn highlight">
+        <div class="link-left">
+          <span>📚</span>
+          <span>Buscador de Recursos & Parciales Pasados</span>
         </div>
+        <span class="arrow" style="color: var(--accent-orange);">→</span>
       </a>
-        <a href="origen-dps.html" style="text-decoration: none; color: inherit; display: block;">
-        <div class="roadmap-card" style="cursor: pointer;">
-          <h3>✍️ Ensayos & Manifiestos</h3>
-          <p>Reflexiones sobre mentalidad, desarrollo personal, finanzas y cómo aprender a vivir.</p>
+
+      <a href="https://t.me/DrakonianAportes" target="_blank" class="link-btn">
+        <div class="link-left">
+          <span>✈️</span>
+          <span>Canal Oficial de Telegram</span>
         </div>
+        <span class="arrow">→</span>
       </a>
-      </div>
-    </section>
 
-<!-- Sección de Publicaciones y Artículos -->
-    <section>
-      <h2 class="section-title">Ensayos & Manifiestos</h2>
-      
-      <a href="origen-dps.html" style="text-decoration: none; color: inherit; display: block;">
-        <article class="post-card" style="cursor: pointer;">
-          <p class="post-date">OCTUBRE 2026</p>
-          <h3 class="post-title">El Origen de Drakonian Peach Society</h3>
-          <p class="post-excerpt">
-            De estudiantes para el mundo: Un manifiesto contra la burocracia educativa, el desperdicio de tiempo y la necesidad de construir alternativas reales a escala.
-          </p>
-        </article>
+      <a href="#" class="link-btn">
+        <div class="link-left">
+          <span>▶️</span>
+          <span>Canal Oficial de YouTube</span>
+        </div>
+        <span class="arrow">→</span>
       </a>
-    </section>
 
-    <!-- Pie de página -->
-    <footer>
-      © 2026 Drakonian Peach Society. Todos los derechos reservados.
-    </footer>
+      <a href="#" class="link-btn">
+        <div class="link-left">
+          <span>⚡</span>
+          <span>Contenido Educativo Corto (TikTok)</span>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+
   </div>
+
+  <footer>
+    <p><b>Drakonian Peach Society</b> es una iniciativa académica e independiente gestionada de forma libre por la comunidad estudiantil.</p>
+    <p style="font-size: 0.78rem; opacity: 0.8; max-width: 600px; margin: 0.5rem auto 0 auto;">
+      <b>Exención de Responsabilidad (DMCA):</b> La plataforma funciona exclusivamente como un índice descentralizado de colaboración académica y no almacena archivos protegidos en servidores propios. Si consideras que algún contenido vulnera derechos de autor o protección de datos, ponte en contacto vía Telegram para su retiro inmediato.
+    </p>
+  </footer>
 
 </body>
 </html>
