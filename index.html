@@ -14,6 +14,11 @@
       --text-main: #f0f3f8;
       --text-muted: #8e9aaf;
       --border-color: #161820;
+
+      /* Variables ajustadas para el Navbar */
+      --mut: #8e9aaf;
+      --mint: #04e090;
+      --bd: #161820;
     }
 
     body {
@@ -27,6 +32,55 @@
       min-height: 100vh;
     }
 
+    /* NAVBAR SUPERIOR ESTILO NU */
+    .dps-navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(10, 10, 12, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 24px;
+    }
+
+    .nav-content {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .nav-logo span { 
+      color: var(--accent-orange); 
+    }
+
+    .nav-links { 
+      display: flex; 
+      gap: 20px; 
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover, .nav-links a.active-link {
+      color: var(--accent-green);
+    }
+
+    /* CONTENEDOR PRINCIPAL */
     .container {
       max-width: 680px;
       margin: 0 auto;
@@ -146,57 +200,23 @@
       line-height: 1.6;
       background: #000000;
     }
-    .dps-navbar {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background: rgba(14, 17, 23, 0.85);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--bd, #30363d);
-  padding: 12px 24px;
-}
-.nav-content {
-  max-width: 1000px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.nav-logo {
-  font-weight: 800;
-  font-size: 1.2rem;
-  color: #fff;
-  text-decoration: none;
-}
-.nav-logo span { color: var(--accent-orange, #FF5A1F); }
-.nav-links { display: flex; gap: 20px; }
-.nav-links a {
-  color: var(--mut, #8b949e);
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 500;
-  transition: color 0.2s;
-}
-.nav-links a:hover, .nav-links a.active-link {
-  color: var(--mint, #04e090);
-}
   </style>
 </head>
 <body>
 
-<!-- NAV SUPERIOR ESTILO NU / FINTECH -->
-<nav class="dps-navbar">
-  <div class="nav-content">
-    <a href="index.html" class="nav-logo">DPS<span>.</span></a>
-    <div class="nav-links">
-      <a href="index.html" class="active-link">Inicio</a>
-      <a href="recursos.html">Recursos</a>
-      <a href="finanzas.html">Finanzas 💳</a>
-      <a href="https://t.me/DrakonianAportes" target="_blank">Telegram</a>
+  <!-- NAV SUPERIOR ESTILO NU / FINTECH -->
+  <nav class="dps-navbar">
+    <div class="nav-content">
+      <a href="index.html" class="nav-logo">DPS<span>.</span></a>
+      <div class="nav-links">
+        <a href="index.html" class="active-link">Inicio</a>
+        <a href="recursos.html">Recursos</a>
+        <a href="finanzas.html">Finanzas 💳</a>
+        <a href="https://t.me/DrakonianAportes" target="_blank">Telegram</a>
+      </div>
     </div>
-  </div>
-</nav>
-  
+  </nav>
+    
   <div class="container">
 
     <header>
@@ -220,15 +240,15 @@
         <span class="arrow" style="color: var(--accent-orange);">→</span>
       </a>
 
-<!-- Botón al Comparador de Finanzas estilo DPS -->
-<a href="finanzas.html" class="link-btn">
-  <div class="link-left">
-    <span>💳</span>
-    <span>Comparador de Tarjetas de Crédito</span>
-  </div>
-  <span class="arrow" style="color: var(--accent-mint);">→</span>
-</a>
-      
+      <!-- Botón al Comparador de Finanzas estilo DPS -->
+      <a href="finanzas.html" class="link-btn">
+        <div class="link-left">
+          <span>💳</span>
+          <span>Comparador de Tarjetas de Crédito</span>
+        </div>
+        <span class="arrow" style="color: var(--accent-green);">→</span>
+      </a>
+        
       <a href="https://t.me/DrakonianAportes" target="_blank" class="link-btn">
         <div class="link-left">
           <span>✈️</span>
