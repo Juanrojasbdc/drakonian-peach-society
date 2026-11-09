@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Finanzas Universitarias | Drakonian Peach Society</title>
+  <style>
+    :root {
+      --bg: #0e1117;
+      --card: #161b22;
+      --tx: #f0f6fc;
+      --mut: #8b949e;
+      --bd: #30363d;
+      --mint: #04e090;
+      --mint-bg: #0a2e21;
+      --orange: #FF5A1F;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--tx);
+      font-family: system-ui, -apple-system, sans-serif;
+      line-height: 1.5;
+    }
+    .wrap { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+    
+    /* Header & Nav */
+    .top-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+    .back-btn { color: var(--mint); text-decoration: none; font-weight: 600; font-size: 0.9rem; }
+    .back-btn:hover { text-decoration: underline; }
+    h1 { font-size: 1.6rem; margin: 0 0 6px 0; color: #fff; }
+    .sub { color: var(--mut); font-size: 0.95rem; margin: 0 0 20px 0; }
+    
+    /* Barra de filtros */
+    .bar { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+    .bar input, .bar select {
+      padding: 10px 12px;
+      border: 1px solid var(--bd);
+      border-radius: 8px;
+      background: var(--card);
+      color: var(--tx);
+      font-size: 0.9rem;
+      outline: none;
+    }
+    .bar input:focus, .bar select:focus { border-color: var(--mint); }
+    .bar input { flex: 1; min-width: 200px; }
+    
+    /* Rejilla de Tarjetas */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 16px; }
+    .c {
+      background: var(--card);
+      border: 1px solid var(--bd);
+      border-radius: 12px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .c:hover { border-color: var(--mint); transform: translateY(-2px); }
+    .c h2 { font-size: 1.1rem; margin: 0; color: #fff; }
+    .bank { color: var(--orange); font-size: 0.85rem; font-weight: 600; }
+    .tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 99px;
+      border: 1px solid var(--bd);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--mut);
+      margin-right: 6px;
+    }
+    dl {
+      margin: 0;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 6px 12px;
+      font-size: 0.9rem;
+      border-top: 1px dashed var(--bd);
+      padding-top: 10px;
+    }
+    dt { color: var(--mut); }
+    dd { margin: 0; text-align: right; font-weight: 600; }
+    a.btn {
+      margin-top: auto;
+      text-align: center;
+      text-decoration: none;
+      background: var(--mint);
+      color: var(--mint-bg);
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+    a.btn:hover { background: #03c47e; }
+    .st { font-size: 0.8rem; color: var(--mut); margin-top: 20px; }
+    .warn { font-size: 0.8rem; color: var(--mut); border-top: 1px solid var(--bd); margin-top: 14px; padding-top: 14px; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top-bar">
+    <a href="index.html" class="back-btn">← Volver al Hub DPS</a>
+  </div>
+  
+  <h1>Comparador de Tarjetas de Crédito</h1>
+  <p class="sub">Herramienta de finanzas universitarias en Colombia. Enlaces directos a sitios oficiales.</p>
+  
+  <div class="bar">
+    <input id="q" type="search" placeholder="Buscar banco o tarjeta…" aria-label="Buscar">
+    <select id="fb" aria-label="Banco"></select>
+    <select id="fr" aria-label="Red"></select>
+    <select id="so" aria-label="Ordenar">
+      <option value="nombre">Ordenar: Nombre</option>
+      <option value="cuota">Ordenar: Cuota de manejo (menor)</option>
+      <option value="tasa">Ordenar: Tasa E.A. (menor)</option>
+    </select>
+  </div>
+  
+  <div id="out" class="grid" aria-live="polite"></div>
+  <p class="st" id="st"></p>
+  <p class="warn">Información de carácter referencial. Las condiciones, tarifas y tasas las define cada entidad y pueden cambiar; confírmalas siempre en el sitio oficial del banco antes de solicitar un producto.</p>
+</div>
+
+<script>
+var DATA_URL = "tarjetas.json";
+var REFRESCO_MIN = 5;
+
+var DATOS_RESPALDO = {
+  actualizado: "2026-11-09",
+  tarjetas: [
+    {banco:"Nu Colombia", nombre:"Tarjeta de Crédito Nu", red:"Mastercard", nivel:"Gold", cuota:0, tasa:28.50, url:"https://nu.com.co"},
+    {banco:"Lulo Bank", nombre:"Lulo Card", red:"Mastercard", nivel:"Débito/Crédito", cuota:0, tasa:27.80, url:"https://www.lulobank.com"},
+    {banco:"Bancolombia", nombre:"Tarjetas Bancolombia", red:"Visa/Mastercard", nivel:"Variado", cuota:null, tasa:null, url:"https://www.bancolombia.com"},
+    {banco:"Davivienda", nombre:"Tarjeta G-Zero", red:"Visa", nivel:"Standard", cuota:0, tasa:28.75, url:"https://www.davivienda.com"},
+    {banco:"Banco Falabella", nombre:"CMR Falabella", red:"Mastercard", nivel:"Clásica", cuota:18900, tasa:28.95, url:"https://www.bancofalabella.com.co"}
+  ]
+};
+
+var datos = DATOS_RESPALDO, $ = function(i){return document.getElementById(i)};
+var fmtCOP = new Intl.NumberFormat("es-CO",{style:"currency",currency:"COP",maximumFractionDigits:0});
+
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function seguro(u){return /^https?:\/\//i.test(u)?u:"#"}
+
+function opciones(sel, etiqueta, valores){
+  var v = sel.value;
+  sel.innerHTML = '<option value="">'+etiqueta+'</option>' + valores.map(function(x){return '<option>'+esc(x)+'</option>'}).join("");
+  sel.value = v;
+}
+
+function unicos(k){
+  var s = {}; datos.tarjetas.forEach(function(t){ if(t[k]) s[t[k]] = 1 });
+  return Object.keys(s).sort();
+}
+
+function pintar(){
+  opciones($("fb"), "Todos los bancos", unicos("banco"));
+  opciones($("fr"), "Todas las redes", unicos("red"));
+  var q = $("q").value.trim().toLowerCase(), b = $("fb").value, r = $("fr").value, o = $("so").value;
+  var l = datos.tarjetas.filter(function(t){
+    return (!b || t.banco===b) && (!r || t.red===r) &&
+      (!q || (t.banco+" "+t.nombre).toLowerCase().indexOf(q)>-1);
+  });
+  l.sort(function(a,c){
+    if(o==="nombre") return a.nombre.localeCompare(c.nombre,"es");
+    var x = a[o]==null?Infinity:a[o], y = c[o]==null?Infinity:c[o];
+    return x-y;
+  });
+  $("out").innerHTML = l.length ? l.map(function(t){
+    return '<article class="c"><div><h2>'+esc(t.nombre)+'</h2><div class="bank">'+esc(t.banco)+'</div></div>'+
+      '<div>'+(t.red?'<span class="tag">'+esc(t.red)+'</span>':'')+(t.nivel?'<span class="tag">'+esc(t.nivel)+'</span>':'')+'</div>'+
+      '<dl><dt>Cuota de manejo</dt><dd>'+(t.cuota==null?'Consultar':(t.cuota===0?'Sin cuota':fmtCOP.format(t.cuota)+'/mes'))+'</dd>'+
+      '<dt>Tasa E.A.</dt><dd>'+(t.tasa==null?'Consultar':t.tasa.toFixed(2)+'%')+'</dd></dl>'+
+      '<a class="btn" href="'+esc(seguro(t.url))+'" target="_blank" rel="noopener noreferrer">Ir al sitio oficial</a></article>';
+  }).join("") : '<p>No hay resultados con esos filtros.</p>';
+}
+
+function estado(txt){
+  $("st").textContent = "Datos del " + datos.actualizado + " · " + txt + " " + new Date().toLocaleTimeString("es-CO");
+}
+
+function cargar(){
+  if(!DATA_URL){ pintar(); estado("mostrando datos de respaldo ·"); return; }
+  fetch(DATA_URL + (DATA_URL.indexOf("?")>-1?"&":"?") + "t=" + Date.now(), {cache:"no-store"})
+    .then(function(r){ if(!r.ok) throw 0; return r.json() })
+    .then(function(j){ if(!j || !Array.isArray(j.tarjetas)) throw 0; datos = j; pintar(); estado("actualizado a las"); })
+    .catch(function(){ pintar(); estado("sin conexión local, usando datos de respaldo ·"); });
+}
+
+["q","fb","fr","so"].forEach(function(i){ $(i).addEventListener("input", pintar) });
+cargar();
+setInterval(cargar, REFRESCO_MIN*60*1000);
+</script>
+</body>
+</html>
