@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Finanzas Universitarias | Drakonian Peach Society</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drakonian Peach Society — Hub Estudiantil</title>
   <link rel="icon" type="image/png" href="favicon.png">
   <style>
     :root {
@@ -16,24 +16,23 @@
       --border-color: #161820;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    
     body {
       background-color: var(--bg-dark);
       color: var(--text-main);
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      line-height: 1.5;
-      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      margin: 0;
+      padding: 0;
       display: flex;
       flex-direction: column;
+      min-height: 100vh;
     }
 
-    /* NAVBAR UNIFICADO */
+    /* NAVBAR SUPERIOR FIJO */
     .dps-navbar {
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: rgba(10, 10, 12, 0.85);
+      background: rgba(0, 0, 0, 0.85);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border-color);
@@ -71,87 +70,113 @@
       color: var(--accent-green);
     }
 
-    /* CONTENEDOR */
-    .wrap {
-      max-width: 1000px;
+    .container {
+      max-width: 680px;
       margin: 0 auto;
-      padding: 32px 16px;
+      padding: 3rem 1rem;
       flex: 1;
     }
 
-    h1 { font-size: 1.6rem; margin: 0 0 6px 0; color: #fff; }
-    .sub { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 24px; }
-
-    /* FILTROS */
-    .bar { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
-    .bar input, .bar select {
-      padding: 10px 14px;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      background: var(--card-bg);
-      color: var(--text-main);
-      font-size: 0.9rem;
-      outline: none;
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
     }
-    .bar input:focus, .bar select:focus { border-color: var(--accent-green); }
-    .bar input { flex: 1; min-width: 200px; }
 
-    /* TARJETAS */
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
-    
-    .c {
+    .logo {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -1px;
+      color: #ffffff;
+      margin: 0;
+    }
+
+    .logo span { color: var(--accent-orange); }
+
+    .subtitle {
+      color: var(--accent-green);
+      font-size: 0.95rem;
+      font-weight: bold;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-top: 0.4rem;
+    }
+
+    .hero-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1.8rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .hero-card h2 {
+      margin-top: 0;
+      font-size: 1.35rem;
+      color: #ffffff;
+    }
+
+    .hero-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 0;
+    }
+
+    .links-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    .link-btn {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: 12px;
-      padding: 18px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      transition: transform 0.2s, border-color 0.2s;
-    }
-    .c:hover { border-color: var(--accent-green); transform: translateY(-2px); }
-    .c h2 { font-size: 1.1rem; margin: 0; color: #fff; }
-    .bank { color: var(--accent-orange); font-size: 0.85rem; font-weight: 600; }
-    
-    .tag {
-      display: inline-block;
-      font-size: 0.75rem;
-      padding: 3px 10px;
-      border-radius: 99px;
-      border: 1px solid var(--border-color);
-      background: rgba(255, 255, 255, 0.03);
-      color: var(--text-muted);
-      margin-right: 6px;
-    }
-    
-    dl {
-      margin: 0;
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 6px 12px;
-      font-size: 0.9rem;
-      border-top: 1px dashed var(--border-color);
-      padding-top: 12px;
-    }
-    dt { color: var(--text-muted); }
-    dd { margin: 0; text-align: right; font-weight: 600; }
-
-    a.btn {
-      margin-top: auto;
-      text-align: center;
+      padding: 1.1rem 1.4rem;
+      color: var(--text-main);
       text-decoration: none;
-      background: var(--accent-green);
-      color: #041a12;
-      padding: 10px;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      transition: opacity 0.2s;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.2s ease;
     }
-    a.btn:hover { opacity: 0.9; }
 
-    .st { font-size: 0.8rem; color: var(--text-muted); margin-top: 24px; }
-    .warn { font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top: 16px; padding-top: 16px; }
+    .link-btn:hover {
+      border-color: var(--accent-green);
+      transform: translateY(-2px);
+      background: rgba(4, 224, 144, 0.04);
+    }
+
+    .link-btn.highlight {
+      border-color: rgba(246, 92, 17, 0.5);
+      background: linear-gradient(135deg, rgba(246, 92, 17, 0.1), rgba(4, 224, 144, 0.05));
+    }
+
+    .link-btn.highlight:hover {
+      border-color: var(--accent-orange);
+      background: linear-gradient(135deg, rgba(246, 92, 17, 0.18), rgba(4, 224, 144, 0.08));
+    }
+
+    .link-left {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .arrow {
+      color: var(--accent-green);
+      font-size: 1.1rem;
+    }
+
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #ffffff;
+    }
 
     footer {
       border-top: 1px solid var(--border-color);
@@ -159,118 +184,82 @@
       text-align: center;
       color: var(--text-muted);
       font-size: 0.82rem;
+      line-height: 1.6;
       background: #000000;
     }
   </style>
 </head>
 <body>
 
-  <!-- NAVBAR IDENTICO AL INICIO -->
+  <!-- NAV SUPERIOR -->
   <nav class="dps-navbar">
     <div class="nav-content">
       <a href="index.html" class="nav-logo">DPS<span>.</span></a>
       <div class="nav-links">
-        <a href="index.html">Inicio</a>
+        <a href="index.html" class="active-link">Inicio</a>
         <a href="recursos.html">Recursos</a>
-        <a href="finanzas.html" class="active-link">Finanzas 💳</a>
+        <a href="finanzas.html">Finanzas 💳</a>
         <a href="https://t.me/DrakonianAportes" target="_blank">Telegram</a>
       </div>
     </div>
   </nav>
+    
+  <div class="container">
+    <header>
+      <h1 class="logo">DPS<span>.</span></h1>
+      <div class="subtitle">Drakonian Peach Society</div>
+    </header>
 
-  <div class="wrap">
-    <h1>Comparador de Tarjetas de Crédito</h1>
-    <p class="sub">Herramienta de finanzas universitarias en Colombia. Enlaces directos a sitios oficiales.</p>
-
-    <div class="bar">
-      <input id="q" type="search" placeholder="Buscar banco o tarjeta…" aria-label="Buscar">
-      <select id="fb" aria-label="Banco"></select>
-      <select id="fr" aria-label="Red"></select>
-      <select id="so" aria-label="Ordenar">
-        <option value="nombre">Ordenar: Nombre</option>
-        <option value="cuota">Ordenar: Cuota de manejo (menor)</option>
-        <option value="tasa">Ordenar: Tasa E.A. (menor)</option>
-      </select>
+    <div class="hero-card">
+      <h2>El Hub Definitivo para Estudiantes</h2>
+      <p>Diseñado para maximizar tu etapa académica. Un ecosistema libre, seguro e independiente para acceder a recursos, guías de estudio, herramientas y colaboraciones entre la comunidad estudiantil.</p>
     </div>
 
-    <div id="out" class="grid" aria-live="polite"></div>
-    <p class="st" id="st"></p>
-    <p class="warn">Información de carácter referencial. Las condiciones, tarifas y tasas las define cada entidad y pueden cambiar; confírmalas siempre en el sitio oficial del banco antes de solicitar un producto.</p>
+    <div class="section-title">Ecosistema DPS</div>
+
+    <div class="links-container">
+      <a href="recursos.html" class="link-btn highlight">
+        <div class="link-left">
+          <span>📚</span>
+          <span>Buscador de Recursos & Parciales Pasados</span>
+        </div>
+        <span class="arrow" style="color: var(--accent-orange);">→</span>
+      </a>
+
+      <a href="finanzas.html" class="link-btn">
+        <div class="link-left">
+          <span>💳</span>
+          <span>Comparador de Tarjetas de Crédito</span>
+        </div>
+        <span class="arrow" style="color: var(--accent-green);">→</span>
+      </a>
+        
+      <a href="https://t.me/DrakonianAportes" target="_blank" class="link-btn">
+        <div class="link-left">
+          <span>✈️</span>
+          <span>Canal Oficial de Telegram</span>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="https://www.youtube.com/@Drakonianpeachsociety" target="_blank" class="link-btn">
+        <div class="link-left">
+          <span>▶️</span>
+          <span>Canal Oficial de YouTube</span>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="#" class="link-btn">
+        <div class="link-left">
+          <span>⚡</span>
+          <span>Contenido Educativo Corto (TikTok)</span>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+    </div>
   </div>
 
   <footer>
-    <p>© 2026 Drakonian Peach Society · Plataforma Estudiantil Libre</p>
-  </footer>
-
-<script>
-var DATA_URL = "tarjetas.json";
-var REFRESCO_MIN = 5;
-
-var DATOS_RESPALDO = {
-  actualizado: "2026-11-09",
-  tarjetas: [
-    {banco:"Nu Colombia", nombre:"Tarjeta de Crédito Nu", red:"Mastercard", nivel:"Gold", cuota:0, tasa:28.50, url:"https://nu.com.co"},
-    {banco:"Lulo Bank", nombre:"Lulo Card", red:"Mastercard", nivel:"Débito/Crédito", cuota:0, tasa:27.80, url:"https://www.lulobank.com"},
-    {banco:"Bancolombia", nombre:"Tarjetas Bancolombia", red:"Visa/Mastercard", nivel:"Variado", cuota:null, tasa:null, url:"https://www.bancolombia.com"},
-    {banco:"Davivienda", nombre:"Tarjeta G-Zero", red:"Visa", nivel:"Standard", cuota:0, tasa:28.75, url:"https://www.davivienda.com"},
-    {banco:"Banco Falabella", nombre:"CMR Falabella", red:"Mastercard", nivel:"Clásica", cuota:18900, tasa:28.95, url:"https://www.bancofalabella.com.co"}
-  ]
-};
-
-var datos = DATOS_RESPALDO, $ = function(i){return document.getElementById(i)};
-var fmtCOP = new Intl.NumberFormat("es-CO",{style:"currency",currency:"COP",maximumFractionDigits:0});
-
-function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
-function seguro(u){return /^https?:\/\//i.test(u)?u:"#"}
-
-function opciones(sel, etiqueta, valores){
-  var v = sel.value;
-  sel.innerHTML = '<option value="">'+etiqueta+'</option>' + valores.map(function(x){return '<option>'+esc(x)+'</option>'}).join("");
-  sel.value = v;
-}
-
-function unicos(k){
-  var s = {}; datos.tarjetas.forEach(function(t){ if(t[k]) s[t[k]] = 1 });
-  return Object.keys(s).sort();
-}
-
-function pintar(){
-  opciones($("fb"), "Todos los bancos", unicos("banco"));
-  opciones($("fr"), "Todas las redes", unicos("red"));
-  var q = $("q").value.trim().toLowerCase(), b = $("fb").value, r = $("fr").value, o = $("so").value;
-  var l = datos.tarjetas.filter(function(t){
-    return (!b || t.banco===b) && (!r || t.red===r) &&
-      (!q || (t.banco+" "+t.nombre).toLowerCase().indexOf(q)>-1);
-  });
-  l.sort(function(a,c){
-    if(o==="nombre") return a.nombre.localeCompare(c.nombre,"es");
-    var x = a[o]==null?Infinity:a[o], y = c[o]==null?Infinity:c[o];
-    return x-y;
-  });
-  $("out").innerHTML = l.length ? l.map(function(t){
-    return '<article class="c"><div><h2>'+esc(t.nombre)+'</h2><div class="bank">'+esc(t.banco)+'</div></div>'+
-      '<div>'+(t.red?'<span class="tag">'+esc(t.red)+'</span>':'')+(t.nivel?'<span class="tag">'+esc(t.nivel)+'</span>':'')+'</div>'+
-      '<dl><dt>Cuota de manejo</dt><dd>'+(t.cuota==null?'Consultar':(t.cuota===0?'Sin cuota':fmtCOP.format(t.cuota)+'/mes'))+'</dd>'+
-      '<dt>Tasa E.A.</dt><dd>'+(t.tasa==null?'Consultar':t.tasa.toFixed(2)+'%')+'</dd></dl>'+
-      '<a class="btn" href="'+esc(seguro(t.url))+'" target="_blank" rel="noopener noreferrer">Ir al sitio oficial</a></article>';
-  }).join("") : '<p>No hay resultados con esos filtros.</p>';
-}
-
-function estado(txt){
-  $("st").textContent = "Datos del " + datos.actualizado + " · " + txt + " " + new Date().toLocaleTimeString("es-CO");
-}
-
-function cargar(){
-  if(!DATA_URL){ pintar(); estado("mostrando datos de respaldo ·"); return; }
-  fetch(DATA_URL + (DATA_URL.indexOf("?")>-1?"&":"?") + "t=" + Date.now(), {cache:"no-store"})
-    .then(function(r){ if(!r.ok) throw 0; return r.json() })
-    .then(function(j){ if(!j || !Array.isArray(j.tarjetas)) throw 0; datos = j; pintar(); estado("actualizado a las"); })
-    .catch(function(){ pintar(); estado("sin conexión local, usando datos de respaldo ·"); });
-}
-
-["q","fb","fr","so"].forEach(function(i){ $(i).addEventListener("input", pintar) });
-cargar();
-setInterval(cargar, REFRESCO_MIN*60*1000);
-</script>
-</body>
-</html>
+    <p><b>Drakonian Peach Society</b> es una iniciativa académica e independiente gestionada de forma libre por la comunidad estudiantil.</p>
+    <p style="font-size: 0.78rem; opacity: 0.8; max-width: 600px; margin:
