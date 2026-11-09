@@ -146,10 +146,57 @@
       line-height: 1.6;
       background: #000000;
     }
+    .dps-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(14, 17, 23, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--bd, #30363d);
+  padding: 12px 24px;
+}
+.nav-content {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-logo {
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: #fff;
+  text-decoration: none;
+}
+.nav-logo span { color: var(--accent-orange, #FF5A1F); }
+.nav-links { display: flex; gap: 20px; }
+.nav-links a {
+  color: var(--mut, #8b949e);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.nav-links a:hover, .nav-links a.active-link {
+  color: var(--mint, #04e090);
+}
   </style>
 </head>
 <body>
 
+<!-- NAV SUPERIOR ESTILO NU / FINTECH -->
+<nav class="dps-navbar">
+  <div class="nav-content">
+    <a href="index.html" class="nav-logo">DPS<span>.</span></a>
+    <div class="nav-links">
+      <a href="index.html" class="active-link">Inicio</a>
+      <a href="recursos.html">Recursos</a>
+      <a href="finanzas.html">Finanzas 💳</a>
+      <a href="https://t.me/DrakonianAportes" target="_blank">Telegram</a>
+    </div>
+  </div>
+</nav>
+  
   <div class="container">
 
     <header>
